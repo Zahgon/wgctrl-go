@@ -65,55 +65,35 @@ type Interface struct {
 	_          [4]byte
 }
 
-func (interfaze *Interface) FirstPeer() *Peer {
-	return (*Peer)(unsafe.Pointer(uintptr(unsafe.Pointer(interfaze)) + unsafe.Sizeof(*interfaze)))
-}
+func (interfaze *Interface) FirstPeer() *Peer { _ = "STUB: not implemented"; return nil }
 
-func (peer *Peer) NextPeer() *Peer {
-	return (*Peer)(unsafe.Pointer(uintptr(unsafe.Pointer(peer)) + unsafe.Sizeof(*peer) + uintptr(peer.AllowedIPsCount)*unsafe.Sizeof(AllowedIP{})))
-}
+func (peer *Peer) NextPeer() *Peer { _ = "STUB: not implemented"; return nil }
 
-func (peer *Peer) FirstAllowedIP() *AllowedIP {
-	return (*AllowedIP)(unsafe.Pointer(uintptr(unsafe.Pointer(peer)) + unsafe.Sizeof(*peer)))
-}
+func (peer *Peer) FirstAllowedIP() *AllowedIP { _ = "STUB: not implemented"; return nil }
 
-func (allowedIP *AllowedIP) NextAllowedIP() *AllowedIP {
-	return (*AllowedIP)(unsafe.Pointer(uintptr(unsafe.Pointer(allowedIP)) + unsafe.Sizeof(*allowedIP)))
-}
+func (allowedIP *AllowedIP) NextAllowedIP() *AllowedIP { _ = "STUB: not implemented"; return nil }
 
 type ConfigBuilder struct {
 	buffer []byte
 }
 
-func (builder *ConfigBuilder) Preallocate(size uint32) {
-	if builder.buffer == nil {
-		builder.buffer = make([]byte, 0, size)
-	}
-}
+func (builder *ConfigBuilder) Preallocate(size uint32) { _ = "STUB: not implemented"; return }
 
 func (builder *ConfigBuilder) AppendInterface(interfaze *Interface) {
-	var newBytes []byte
-	unsafeSlice(unsafe.Pointer(&newBytes), unsafe.Pointer(interfaze), int(unsafe.Sizeof(*interfaze)))
-	builder.buffer = append(builder.buffer, newBytes...)
+	_ = "STUB: not implemented"
+	return
 }
 
-func (builder *ConfigBuilder) AppendPeer(peer *Peer) {
-	var newBytes []byte
-	unsafeSlice(unsafe.Pointer(&newBytes), unsafe.Pointer(peer), int(unsafe.Sizeof(*peer)))
-	builder.buffer = append(builder.buffer, newBytes...)
-}
+func (builder *ConfigBuilder) AppendPeer(peer *Peer) { _ = "STUB: not implemented"; return }
 
 func (builder *ConfigBuilder) AppendAllowedIP(allowedIP *AllowedIP) {
-	var newBytes []byte
-	unsafeSlice(unsafe.Pointer(&newBytes), unsafe.Pointer(allowedIP), int(unsafe.Sizeof(*allowedIP)))
-	builder.buffer = append(builder.buffer, newBytes...)
+	_ = "STUB: not implemented"
+	return
 }
 
 func (builder *ConfigBuilder) Interface() (*Interface, uint32) {
-	if builder.buffer == nil {
-		return nil, 0
-	}
-	return (*Interface)(unsafe.Pointer(&builder.buffer[0])), uint32(len(builder.buffer))
+	_ = "STUB: not implemented"
+	return nil, 0
 }
 
 // unsafeSlice updates the slice slicePtr to be a slice
@@ -122,14 +102,4 @@ func (builder *ConfigBuilder) Interface() (*Interface, uint32) {
 //
 // TODO: whenGo 1.17 is the minimum supported version,
 // update callers to use unsafe.Slice instead of this.
-func unsafeSlice(slicePtr, data unsafe.Pointer, lenCap int) {
-	type sliceHeader struct {
-		Data unsafe.Pointer
-		Len  int
-		Cap  int
-	}
-	h := (*sliceHeader)(slicePtr)
-	h.Data = data
-	h.Len = lenCap
-	h.Cap = lenCap
-}
+func unsafeSlice(slicePtr, data unsafe.Pointer, lenCap int) { _ = "STUB: not implemented"; return }

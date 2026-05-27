@@ -1,13 +1,8 @@
 package wgtypes
 
 import (
-	"crypto/rand"
-	"encoding/base64"
-	"fmt"
 	"net"
 	"time"
-
-	"golang.org/x/crypto/curve25519"
 )
 
 // A DeviceType specifies the underlying implementation of a WireGuard device.
@@ -24,22 +19,7 @@ const (
 )
 
 // String returns the string representation of a DeviceType.
-func (dt DeviceType) String() string {
-	switch dt {
-	case LinuxKernel:
-		return "Linux kernel"
-	case OpenBSDKernel:
-		return "OpenBSD kernel"
-	case FreeBSDKernel:
-		return "FreeBSD kernel"
-	case WindowsKernel:
-		return "Windows kernel"
-	case Userspace:
-		return "userspace"
-	default:
-		return "unknown"
-	}
-}
+func (dt DeviceType) String() string { _ = "STUB: not implemented"; return "" }
 
 // A Device is a WireGuard device.
 type Device struct {
@@ -81,78 +61,35 @@ type Key [KeyLen]byte
 //
 // The output Key should not be used as a private key; use GeneratePrivateKey
 // instead.
-func GenerateKey() (Key, error) {
-	b := make([]byte, KeyLen)
-	if _, err := rand.Read(b); err != nil {
-		return Key{}, fmt.Errorf("wgtypes: failed to read random bytes: %v", err)
-	}
-
-	return NewKey(b)
-}
+func GenerateKey() (Key, error) { _ = "STUB: not implemented"; return *new(Key), nil }
 
 // GeneratePrivateKey generates a Key suitable for use as a private key from a
 // cryptographically safe source.
-func GeneratePrivateKey() (Key, error) {
-	key, err := GenerateKey()
-	if err != nil {
-		return Key{}, err
-	}
+func GeneratePrivateKey() (Key, error) { _ = "STUB: not implemented"; return *new(Key), nil }
 
-	// Modify random bytes using algorithm described at:
-	// https://cr.yp.to/ecdh.html.
-	key[0] &= 248
-	key[31] &= 127
-	key[31] |= 64
-
-	return key, nil
-}
+// Modify random bytes using algorithm described at:
+// https://cr.yp.to/ecdh.html.
 
 // NewKey creates a Key from an existing byte slice.  The byte slice must be
 // exactly 32 bytes in length.
-func NewKey(b []byte) (Key, error) {
-	if len(b) != KeyLen {
-		return Key{}, fmt.Errorf("wgtypes: incorrect key size: %d", len(b))
-	}
-
-	var k Key
-	copy(k[:], b)
-
-	return k, nil
-}
+func NewKey(b []byte) (Key, error) { _ = "STUB: not implemented"; return *new(Key), nil }
 
 // ParseKey parses a Key from a base64-encoded string, as produced by the
 // Key.String method.
-func ParseKey(s string) (Key, error) {
-	b, err := base64.StdEncoding.DecodeString(s)
-	if err != nil {
-		return Key{}, fmt.Errorf("wgtypes: failed to parse base64-encoded key: %v", err)
-	}
-
-	return NewKey(b)
-}
+func ParseKey(s string) (Key, error) { _ = "STUB: not implemented"; return *new(Key), nil }
 
 // PublicKey computes a public key from the private key k.
 //
 // PublicKey should only be called when k is a private key.
-func (k Key) PublicKey() Key {
-	var (
-		pub  [KeyLen]byte
-		priv = [KeyLen]byte(k)
-	)
+func (k Key) PublicKey() Key { _ = "STUB: not implemented"; return *new(Key) }
 
-	// ScalarBaseMult uses the correct base value per https://cr.yp.to/ecdh.html,
-	// so no need to specify it.
-	curve25519.ScalarBaseMult(&pub, &priv)
-
-	return Key(pub)
-}
+// ScalarBaseMult uses the correct base value per https://cr.yp.to/ecdh.html,
+// so no need to specify it.
 
 // String returns the base64-encoded string representation of a Key.
 //
 // ParseKey can be used to produce a new Key from this string.
-func (k Key) String() string {
-	return base64.StdEncoding.EncodeToString(k[:])
-}
+func (k Key) String() string { _ = "STUB: not implemented"; return "" }
 
 // A Peer is a WireGuard peer to a Device.
 type Peer struct {

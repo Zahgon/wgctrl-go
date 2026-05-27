@@ -1,73 +1,27 @@
 package wgtest
 
 import (
-	"encoding/hex"
-	"fmt"
 	"net"
 
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 )
 
 // MustCIDR converts CIDR string s into a net.IPNet or panics.
-func MustCIDR(s string) net.IPNet {
-	_, cidr, err := net.ParseCIDR(s)
-	if err != nil {
-		panicf("wgtest: failed to parse CIDR: %v", err)
-	}
-
-	return *cidr
-}
+func MustCIDR(s string) net.IPNet { _ = "STUB: not implemented"; return *new(net.IPNet) }
 
 // MustHexKey decodes a hex string s as a key or panics.
-func MustHexKey(s string) wgtypes.Key {
-	b, err := hex.DecodeString(s)
-	if err != nil {
-		panicf("wgtest: failed to decode hex key: %v", err)
-	}
-
-	k, err := wgtypes.NewKey(b)
-	if err != nil {
-		panicf("wgtest: failed to create key: %v", err)
-	}
-
-	return k
-}
+func MustHexKey(s string) wgtypes.Key { _ = "STUB: not implemented"; return *new(wgtypes.Key) }
 
 // MustPresharedKey generates a preshared key or panics.
-func MustPresharedKey() wgtypes.Key {
-	k, err := wgtypes.GenerateKey()
-	if err != nil {
-		panicf("wgtest: failed to generate preshared key: %v", err)
-	}
-
-	return k
-}
+func MustPresharedKey() wgtypes.Key { _ = "STUB: not implemented"; return *new(wgtypes.Key) }
 
 // MustPrivateKey generates a private key or panics.
-func MustPrivateKey() wgtypes.Key {
-	k, err := wgtypes.GeneratePrivateKey()
-	if err != nil {
-		panicf("wgtest: failed to generate private key: %v", err)
-	}
-
-	return k
-}
+func MustPrivateKey() wgtypes.Key { _ = "STUB: not implemented"; return *new(wgtypes.Key) }
 
 // MustPublicKey generates a public key or panics.
-func MustPublicKey() wgtypes.Key {
-	return MustPrivateKey().PublicKey()
-}
+func MustPublicKey() wgtypes.Key { _ = "STUB: not implemented"; return *new(wgtypes.Key) }
 
 // MustUDPAddr parses s as a UDP address or panics.
-func MustUDPAddr(s string) *net.UDPAddr {
-	a, err := net.ResolveUDPAddr("udp", s)
-	if err != nil {
-		panicf("wgtest: failed to resolve UDP address: %v", err)
-	}
+func MustUDPAddr(s string) *net.UDPAddr { _ = "STUB: not implemented"; return nil }
 
-	return a
-}
-
-func panicf(format string, a ...interface{}) {
-	panic(fmt.Sprintf(format, a...))
-}
+func panicf(format string, a ...interface{}) { _ = "STUB: not implemented"; return }

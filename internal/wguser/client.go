@@ -1,11 +1,7 @@
 package wguser
 
 import (
-	"fmt"
 	"net"
-	"os"
-	"path/filepath"
-	"strings"
 
 	"golang.zx2c4.com/wireguard/wgctrl/internal/wginternal"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
@@ -21,79 +17,37 @@ type Client struct {
 
 // New creates a new Client.
 func New() (*Client, error) {
-	return &Client{
-		// Operating system-specific functions which can identify and connect
-		// to userspace WireGuard devices. These functions can also be
-		// overridden for tests.
-		dial: dial,
-		find: find,
-	}, nil
+	_ = "STUB: not implemented"
+
+	// Operating system-specific functions which can identify and connect
+	// to userspace WireGuard devices. These functions can also be
+	// overridden for tests.
+	return nil, nil
 }
 
 // Close implements wginternal.Client.
-func (c *Client) Close() error { return nil }
+func (c *Client) Close() error {
+	_ = "STUB: not implemented"
 
-// Devices implements wginternal.Client.
-func (c *Client) Devices() ([]*wgtypes.Device, error) {
-	devices, err := c.find()
-	if err != nil {
-		return nil, err
-	}
-
-	wgds := make([]*wgtypes.Device, 0, len(devices))
-	for _, d := range devices {
-		wgd, err := c.getDevice(d)
-		if err != nil {
-			return nil, err
-		}
-
-		wgds = append(wgds, wgd)
-	}
-
-	return wgds, nil
+	// Devices implements wginternal.Client.
+	return nil
 }
+
+func (c *Client) Devices() ([]*wgtypes.Device, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Device implements wginternal.Client.
 func (c *Client) Device(name string) (*wgtypes.Device, error) {
-	devices, err := c.find()
-	if err != nil {
-		return nil, err
-	}
-
-	for _, d := range devices {
-		if name != deviceName(d) {
-			continue
-		}
-
-		return c.getDevice(d)
-	}
-
-	return nil, os.ErrNotExist
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ConfigureDevice implements wginternal.Client.
 func (c *Client) ConfigureDevice(name string, cfg wgtypes.Config) error {
-	devices, err := c.find()
-	if err != nil {
-		return err
-	}
-
-	for _, d := range devices {
-		if name != deviceName(d) {
-			continue
-		}
-
-		return c.configureDevice(d, cfg)
-	}
-
-	return os.ErrNotExist
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // deviceName infers a device name from an absolute file path with extension.
-func deviceName(sock string) string {
-	return strings.TrimSuffix(filepath.Base(sock), filepath.Ext(sock))
-}
+func deviceName(sock string) string { _ = "STUB: not implemented"; return "" }
 
-func panicf(format string, a ...interface{}) {
-	panic(fmt.Sprintf(format, a...))
-}
+func panicf(format string, a ...interface{}) { _ = "STUB: not implemented"; return }
